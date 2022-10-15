@@ -1,0 +1,222 @@
+h1,
+h2,
+h3,
+p {
+  text-align: center;
+}
+
+h3 {
+  font-family: "Poppins", sans-serif;
+}
+
+#current-city {
+  font-family: "Comfortaa", cursive;
+  font-size: 35px;
+  letter-spacing: 2px;
+  position: relative;
+  margin-top: 13%;
+  margin-bottom: 0%;
+}
+
+#current-time {
+  font-family: "Comfortaa", cursive;
+  font-size: 16px;
+  position: absolute;
+  top: 7%;
+  right: 5%;
+}
+
+#current-date {
+  font-family: "Comfortaa", cursive;
+  font-size: 16px;
+  position: absolute;
+  top: 4%;
+  right: 5%;
+}
+
+#search-city {
+  border: 1px solid white;
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  right: 3%;
+}
+
+#magnifying-glass {
+  border: 1px solid white;
+  border-radius: 50%;
+  position: relative;
+  right: 3%;
+}
+
+#main-temp {
+  font-family: "Comfortaa", cursive;
+  font-size: 90px;
+  position: relative;
+  top: 13%;
+}
+
+#main-forecast {
+  font-size: 22px;
+  position: relative;
+  top: 10%;
+}
+
+#main-celsius {
+  font-size: 22px;
+  position: relative;
+  top: 25px;
+  right: 3%;
+}
+
+#main-farenheit {
+  font-size: 22px;
+  position: relative;
+  top: 25px;
+  left: 3%;
+  color: rgba(66, 75, 79, 0.6);
+}
+
+#degree-divider {
+  font-size: 22px;
+  position: relative;
+  top: 25px;
+}
+
+#main-high {
+  font-size: 22px;
+  position: relative;
+  margin-right: 4%;
+}
+
+#main-low {
+  font-size: 22px;
+  position: relative;
+  color: rgba(66, 75, 79, 0.6);
+}
+
+#temp-divider {
+  position: relative;
+  right: 2%;
+}
+
+.card {
+  margin: 100px auto;
+  display: block;
+  border: 1px solid black;
+  border-radius: 40px;
+}
+
+.circle {
+  margin: 0 auto;
+
+  display: block;
+  border: 8px solid rgba(66, 75, 79, 0.4);
+  border-radius: 50%;
+  height: 240px;
+  width: 240px;
+}
+
+#affirmations {
+  font-family: "Comfortaa", cursive;
+  position: relative;
+  margin-top: 6%;
+}
+
+#day-one {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  position: absolute;
+  right: 73%;
+  top: 72.5%;
+}
+
+#day-one-icon {
+  font-size: 60px;
+  color: rgba(66, 75, 79, 0.4);
+  position: absolute;
+  left: 14%;
+  top: 78.5%;
+}
+
+#day-one-high-temp {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  position: absolute;
+  right: 81%;
+  top: 88.8%;
+}
+
+#day-one-low-temp {
+  font-family: "Poppins", sans-serif;
+  color: rgba(66, 75, 79, 0.6);
+  font-size: 20px;
+  position: absolute;
+  bottom: 7.4%;
+  right: 73.2%;
+}
+
+#day-two {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  position: absolute;
+  bottom: 22.5%;
+  left: 44%;
+}
+
+#day-two-icon {
+  font-size: 60px;
+  color: rgba(66, 75, 79, 0.4);
+  position: absolute;
+  bottom: 14%;
+  left: 41.5%;
+}
+
+#day-two-high-temp {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  position: absolute;
+  bottom: 7.2%;
+  left: 43.3%;
+}
+
+#day-two-low-temp {
+  font-family: "Poppins", sans-serif;
+  color: rgba(66, 75, 79, 0.6);
+  font-size: 20px;
+  position: absolute;
+  bottom: 7.2%;
+  left: 51%;
+}
+#day-three {
+  font-family: "Poppins", sans-serif;
+  font-size: 25px;
+  position: absolute;
+  bottom: 22.5%;
+  left: 73.5%;
+}
+
+#day-three-icon {
+  font-size: 60px;
+  color: rgba(66, 75, 79, 0.4);
+  position: absolute;
+  bottom: 14%;
+  left: 73%;
+}
+
+#day-three-high-temp {
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  position: absolute;
+  bottom: 7.2%;
+  left: 73%;
+}
+
+#day-three-low-temp {
+  font-family: "Poppins", sans-serif;
+  color: rgba(66, 75, 79, 0.6);
+  font-size: 20px;
+  position: absolute;
+  bottom: 7.2%;
+  left: 81%;
+}
