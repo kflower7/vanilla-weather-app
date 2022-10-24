@@ -268,3 +268,11 @@ button {
   left: 93.5%;
   margin-bottom: 80%;
 }
+
+#updated {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  position: relative;
+  top: 155%;
+  left: 50%;
+}

@@ -76,27 +76,59 @@ function cityName(event) {
 function showMainTemperature(response) {
   let mainDegree = document.querySelector("#main-temp");
   let mainTemp = Math.round(response.data.main.temp);
-  mainDegree.innerHTML = `${mainTemp}`;
   let mainHighDegree = document.querySelector("#main-high");
   let highTemp = Math.round(response.data.main.temp_max);
-  mainHighDegree.innerHTML = `${highTemp}`;
   let mainLowDegree = document.querySelector("#main-low");
   let lowTemp = Math.round(response.data.main.temp_min);
-  mainLowDegree.innerHTML = `${lowTemp}`;
   let mainForecast = document.querySelector("#main-forecast");
   let forecast = response.data.weather[0].main;
+  let updateElement = document.querySelector("#updated");
+  let backgroundImage = document.querySelector("#main-image");
+  let forecastImage = response.data.weather[0].main;
+  if (forecastImage === "Clear") {
+    forecastImage = "sunny";
+  }
+  if (forecastImage === "Clouds") {
+    forecastImage = "cloudy";
+  }
+  if (forecastImage === "Snow") {
+    forecastImage = "snowy";
+  }
+  if (forecastImage === "Rain") {
+    forecastImage = "rainy";
+  }
+  mainDegree.innerHTML = `${mainTemp}`;
+  mainHighDegree.innerHTML = `${highTemp}`;
+  mainLowDegree.innerHTML = `${lowTemp}`;
   mainForecast.innerHTML = `${forecast}`;
+  updateElement.innerHTML = formatUpdate(response.data.dt * 1000);
+  backgroundImage.setAttribute("src", `images/${forecastImage}.png`);
+}
 
-  if (forecast.value === "clear") {
-    let displayElementSun = document.querySelector("#main-image");
-    let sunny = (img.src = "images.sunny.png");
-    displayElementSun.innerHTML = `${sunny}`;
+function formatUpdate(timestamp) {
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let day = days[date.getDay()];
+
+  if (hours < 10) {
+    hours = `0${hours}`;
   }
-  if (forecast.value === "clouds") {
-    let displayElementCloud = document.querySelector("#main-image");
-    let cloudy = (img.src = "images.cloudy.png");
-    displayElementCloud.innerHTML = `${cloudy}`;
+
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
   }
+
+  return `Last updated ${day} ${hours}:${minutes}`;
 }
 
 let form = document.querySelector(".search-bar");
