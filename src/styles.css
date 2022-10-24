@@ -53,7 +53,8 @@ h3 {
   font-family: "Comfortaa", cursive;
   font-size: 90px;
   position: relative;
-  top: 13%;
+  top: 8%;
+  margin-bottom: 0;
 }
 
 #main-forecast {
@@ -62,25 +63,36 @@ h3 {
   top: 10%;
 }
 
+button {
+  background-color: transparent;
+  color: transparent;
+  border: 1px solid transparent;
+}
+
+#celsius-link,
+#fahrenheit-link {
+  text-decoration: none;
+}
 #main-celsius {
+  color: black;
   font-size: 22px;
   position: relative;
-  top: 25px;
+  top: 20px;
   right: 3%;
 }
 
-#main-farenheit {
+#main-fahrenheit {
   font-size: 22px;
   position: relative;
-  top: 25px;
-  left: 3%;
+  top: 20px;
+  right: 20%;
   color: rgba(66, 75, 79, 0.6);
 }
 
 #degree-divider {
   font-size: 22px;
   position: relative;
-  top: 25px;
+  top: 20px;
 }
 
 #main-high {
@@ -115,12 +127,14 @@ h3 {
   border-radius: 50%;
   height: 240px;
   width: 240px;
+  position: relative;
+  bottom: 28px;
 }
 
 #affirmations {
   font-family: "Comfortaa", cursive;
   position: relative;
-  margin-top: 6%;
+  margin-top: 2%;
 }
 
 #day-one {
@@ -143,8 +157,8 @@ h3 {
   font-family: "Poppins", sans-serif;
   font-size: 20px;
   position: absolute;
-  right: 81%;
-  top: 88.8%;
+  right: 82%;
+  top: 89%;
 }
 
 #day-one-low-temp {
@@ -152,8 +166,14 @@ h3 {
   color: rgba(66, 75, 79, 0.6);
   font-size: 20px;
   position: absolute;
-  bottom: 7.4%;
-  right: 73.2%;
+  bottom: 7.2%;
+  right: 72.2%;
+}
+
+#day-one-line {
+  position: absolute;
+  bottom: 7.6%;
+  right: 79.4%;
 }
 
 #day-two {
@@ -177,7 +197,7 @@ h3 {
   font-size: 20px;
   position: absolute;
   bottom: 7.2%;
-  left: 43.3%;
+  left: 42.3%;
 }
 
 #day-two-low-temp {
@@ -186,7 +206,13 @@ h3 {
   font-size: 20px;
   position: absolute;
   bottom: 7.2%;
-  left: 51%;
+  left: 52%;
+}
+
+#day-two-line {
+  position: absolute;
+  bottom: 7.6%;
+  left: 49.5%;
 }
 #day-three {
   font-family: "Poppins", sans-serif;
@@ -209,7 +235,7 @@ h3 {
   font-size: 20px;
   position: absolute;
   bottom: 7.2%;
-  left: 73%;
+  left: 72%;
 }
 
 #day-three-low-temp {
@@ -218,5 +244,27 @@ h3 {
   font-size: 20px;
   position: absolute;
   bottom: 7.2%;
-  left: 81%;
+  left: 82%;
+}
+
+#day-three-line {
+  position: absolute;
+  bottom: 7.6%;
+  left: 79.2%;
+}
+
+#left-arrow {
+  color: rgba(66, 75, 79, 0.6);
+  font-size: 30px;
+  position: relative;
+  right: 7%;
+  margin-top: 15%;
+}
+
+#right-arrow {
+  color: rgba(66, 75, 79, 0.6);
+  font-size: 30px;
+  position: relative;
+  left: 93.5%;
+  margin-bottom: 80%;
 }

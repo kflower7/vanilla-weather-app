@@ -29,6 +29,7 @@
       src="https://kit.fontawesome.com/1e32dfa7ee.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
   </head>
   <body>
     <div class="card text-bg-light" style="width: 28rem">
@@ -48,15 +49,21 @@
           <h2 class="card-title" id="current-city">VALENCIA</h2>
           <h3 id="main-forecast">Sunny</h3>
           <br />
-
-          <p id="current-time">15:30 Friday</p>
-          <p id="current-date">07 October 2022</p>
+          <div id="current-data">
+            <p>
+              <span id="current-time">15:30 Friday</span>
+              <span id="current-date">07 October 2022 </span>
+            </p>
+          </div>
 
           <div class="circle">
             <h3>
-              <span id="main-celsius">°C </span
-              ><span id="degree-divider">|</span
-              ><span id="main-farenheit"> °F</span>
+              <button class="cLink" id="celsius-link">
+                <span id="main-celsius">°C </span></button
+              ><span id="degree-divider">|</span>
+              <button id="fahrenheit-link">
+                <span id="main-fahrenheit"> °F</span>
+              </button>
             </h3>
             <h1 id="main-temp">27</h1>
             <br />
@@ -76,6 +83,7 @@
             <span class="fa-solid fa-sun" id="day-one-icon"></span>
             <p>
               <span id="day-one-high-temp">29 </span>
+              <span id="day-one-line">|</span>
               <span id="day-one-low-temp">23 </span>
             </p>
           </div>
@@ -84,6 +92,7 @@
             <span class="fa-solid fa-cloud-sun" id="day-two-icon"></span>
             <p>
               <span id="day-two-high-temp">29 </span>
+              <span id="day-two-line">|</span>
               <span id="day-two-low-temp">24 </span>
             </p>
           </div>
@@ -92,11 +101,22 @@
             <span class="fa-solid fa-cloud-rain" id="day-three-icon"></span>
             <p>
               <span id="day-three-high-temp">29 </span>
+              <span id="day-three-line">|</span>
               <span id="day-three-low-temp">21</span>
             </p>
+          </div>
+          <div>
+            <a href="#" id="left-arrow-link">
+              <span class="fa-solid fa-chevron-left" id="left-arrow"></span
+            ></a>
+            <a href="#" id="right-arrow-link"
+              ><span class="fa-solid fa-chevron-right" id="right-arrow"></span
+            ></a>
           </div>
         </div>
       </div>
     </div>
+
+    <script src="src/script.js"></script>
   </body>
 </html>
