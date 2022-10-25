@@ -107,13 +107,9 @@ function cityName(event) {
 
 function showMainTemperature(response) {
   let mainDegree = document.querySelector("#main-temp");
-  let mainTemp = Math.round(celsiusTemperature);
   let mainHighDegree = document.querySelector("#main-high");
-  let highTemp = Math.round(celsiusTemperatureHigh);
   let mainLowDegree = document.querySelector("#main-low");
-  let lowTemp = Math.round(celsiusTemperatureLow);
   let mainForecast = document.querySelector("#main-forecast");
-  let forecast = response.data.weather[0].main;
   let updateElement = document.querySelector("#updated");
   let backgroundImage = document.querySelector("#main-image");
   let forecastImage = response.data.weather[0].main;
@@ -134,10 +130,10 @@ function showMainTemperature(response) {
   celsiusTemperatureHigh = response.data.main.temp_max;
   celsiusTemperatureLow = response.data.main.temp_min;
 
-  mainDegree.innerHTML = `${mainTemp}`;
-  mainHighDegree.innerHTML = `${highTemp}`;
-  mainLowDegree.innerHTML = `${lowTemp}`;
-  mainForecast.innerHTML = `${forecast}`;
+  mainDegree.innerHTML = Math.round(celsiusTemperature);
+  mainHighDegree.innerHTML = Math.round(celsiusTemperatureHigh);
+  mainLowDegree.innerHTML = Math.round(celsiusTemperatureLow);
+  mainForecast.innerHTML = response.data.weather[0].main;
   updateElement.innerHTML = formatUpdate(response.data.dt * 1000);
   backgroundImage.setAttribute("src", `images/${forecastImage}.png`);
   backgroundImage.setAttribute("alt", response.data.weather[0].description);
@@ -193,8 +189,8 @@ function displayForecast() {
   });
 
   forecastElement.innerHTML = forecastHTML;
-  displayForecast();
 }
+displayForecast();
 
 // Celsius / Fahrenheit Conversion
 
