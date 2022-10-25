@@ -60,6 +60,38 @@ function formatDate(date) {
 let todaysDate = document.querySelector("#current-date");
 todaysDate.innerHTML = formatDate(currentTime);
 
+// Current Location and data
+
+function currentLocation() {
+  navigator.geolocation.getCurrentPosition(getCityName);
+}
+
+function getCityName(position) {
+  let latitude = position.coords.latitude;
+  let longitude = position.coords.longitude;
+  let apiKey = "a7083641b7ebf003aec9614bf223ec5f";
+  let apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+  axios.get(apiUrl).then(displayCityName);
+}
+
+function displayCityName(response) {
+  currentCityDisplay = document.querySelector("#current-city");
+  currentCityName = response.data[0].name;
+  units = "metric";
+  apiKey = "a7083641b7ebf003aec9614bf223ec5f";
+  let currentTemperatureUrl = `https://api.openweathermap.org/data/2.5/weather?q=${currentCityName}&units=${unit}&appid=${apiKey}`;
+  currentCityDisplay.innerHTML = `${currentCityName}`;
+  axios.get(currentTemperatureUrl).then(showCurrentTemperature);
+}
+
+function showCurrentTemperature(response) {
+  let currentMainTemp = document.querySelector("#main-temp");
+  let currentTemp = Math.round(response.data.main.temp);
+  currentMainTemp.innerHTML = `${currentTemp}`;
+}
+
+window.onload = currentLocation;
+
 // Search Bar
 
 function cityName(event) {
@@ -75,11 +107,11 @@ function cityName(event) {
 
 function showMainTemperature(response) {
   let mainDegree = document.querySelector("#main-temp");
-  let mainTemp = Math.round(response.data.main.temp);
+  let mainTemp = Math.round(celsiusTemperature);
   let mainHighDegree = document.querySelector("#main-high");
-  let highTemp = Math.round(response.data.main.temp_max);
+  let highTemp = Math.round(celsiusTemperatureHigh);
   let mainLowDegree = document.querySelector("#main-low");
-  let lowTemp = Math.round(response.data.main.temp_min);
+  let lowTemp = Math.round(celsiusTemperatureLow);
   let mainForecast = document.querySelector("#main-forecast");
   let forecast = response.data.weather[0].main;
   let updateElement = document.querySelector("#updated");
@@ -97,12 +129,18 @@ function showMainTemperature(response) {
   if (forecastImage === "Rain") {
     forecastImage = "rainy";
   }
+
+  celsiusTemperature = response.data.main.temp;
+  celsiusTemperatureHigh = response.data.main.temp_max;
+  celsiusTemperatureLow = response.data.main.temp_min;
+
   mainDegree.innerHTML = `${mainTemp}`;
   mainHighDegree.innerHTML = `${highTemp}`;
   mainLowDegree.innerHTML = `${lowTemp}`;
   mainForecast.innerHTML = `${forecast}`;
   updateElement.innerHTML = formatUpdate(response.data.dt * 1000);
   backgroundImage.setAttribute("src", `images/${forecastImage}.png`);
+  backgroundImage.setAttribute("alt", response.data.weather[0].description);
 }
 
 function formatUpdate(timestamp) {
@@ -134,44 +172,66 @@ function formatUpdate(timestamp) {
 let form = document.querySelector(".search-bar");
 form.addEventListener("submit", cityName);
 
+// Forecast
+
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
+  let days = ["MON", "TUES", "WED"];
+  days.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col-4">
+  <h2 class="forecast-day" id="item1">${day}</h2>
+  <span class="fa-solid fa-sun" class="forecast-icon" id="item2"></span>
+  <br />
+  <p class="forecast-temp id="item3">
+   <span id="forecast-temp-high">29 |</span><span id="forecast-temp-low"> 23</span>
+  </p>
+</div>`;
+  });
+
+  forecastElement.innerHTML = forecastHTML;
+  displayForecast();
+}
+
 // Celsius / Fahrenheit Conversion
 
-function fahrenheitConversion() {
+function fahrenheitConversion(event) {
+  event.preventDefault();
   let mainDegree = document.querySelector("#main-temp");
-  let temperature = mainDegree.innerHTML;
-  let fahrenheit = Math.round((temperature * 9) / 5 + 32);
-  mainDegree.innerHTML = `${fahrenheit}`;
-
   let highDegree = document.querySelector("#main-high");
-  let highTemp = highDegree.innerHTML;
-  let highFahrenheit = Math.round((highTemp * 9) / 5 + 32);
-  highDegree.innerHTML = `${highFahrenheit}`;
-
   let lowDegree = document.querySelector("#main-low");
-  let lowTemp = lowDegree.innerHTML;
-  let lowFahrenheit = Math.round((lowTemp * 9) / 5 + 32);
-  lowDegree.innerHTML = `${lowFahrenheit}`;
+
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+
+  mainDegree.innerHTML = Math.round((celsiusTemperature * 9) / 5 + 32);
+  highDegree.innerHTML = Math.round((celsiusTemperatureHigh * 9) / 5 + 32);
+  lowDegree.innerHTML = Math.round((celsiusTemperatureLow * 9) / 5 + 32);
 }
 
-let conversion = document.querySelector("#fahrenheit-link");
-conversion.addEventListener("click", fahrenheitConversion);
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", fahrenheitConversion);
 
-function celsiusConversion() {
+function celsiusConversion(event) {
+  event.preventDefault();
   let mainDegreeC = document.querySelector("#main-temp");
-  let temperatureC = mainDegreeC.innerHTML;
-  let celsius = Math.round(((temperatureC - 32) * 5) / 9);
-  mainDegreeC.innerHTML = `${celsius}`;
-
   let highDegreeC = document.querySelector("#main-high");
-  let highTempC = highDegreeC.innerHTML;
-  let highCelsius = Math.round(((highTempC - 32) * 5) / 9);
-  highDegreeC.innerHTML = `${highCelsius}`;
-
   let lowDegreeC = document.querySelector("#main-low");
-  let lowTempC = lowDegreeC.innerHTML;
-  let lowCelsius = Math.round(((lowTempC - 32) * 5) / 9);
-  lowDegreeC.innerHTML = `${lowCelsius}`;
+
+  fahrenheitLink.classList.remove("active");
+  celsiusLink.classList.add("active");
+
+  mainDegreeC.innerHTML = Math.round(celsiusTemperature);
+  highDegreeC.innerHTML = Math.round(celsiusTemperatureHigh);
+  lowDegreeC.innerHTML = Math.round(celsiusTemperatureLow);
 }
 
-let conversionBack = document.querySelector("#celsius-link");
-conversionBack.addEventListener("click", celsiusConversion);
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", celsiusConversion);
+
+let celsiusTemperature = null;
+let celsiusTemperatureHigh = null;
+let celsiusTemperatureLow = null;

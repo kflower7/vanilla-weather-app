@@ -31,7 +31,7 @@
     ></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
   </head>
-  <body>
+  <body onload="javascript:currentLocation()">
     <div class="card text-bg-light" style="width: 28rem">
       <img id="main-image" src="images/sunny.png" alt="" />
       <div class="card-img-overlay">
@@ -58,12 +58,12 @@
 
           <div class="circle">
             <h3>
-              <button class="cLink" id="celsius-link">
-                <span id="main-celsius">°C </span></button
+              <a href="#" class="cLink" id="celsius-link">
+                <span id="main-celsius">°C </span></a
               ><span id="degree-divider">|</span>
-              <button id="fahrenheit-link">
+              <a href="#" id="fahrenheit-link">
                 <span id="main-fahrenheit"> °F</span>
-              </button>
+              </a>
             </h3>
             <h1 id="main-temp">27</h1>
             <br />
@@ -72,7 +72,7 @@
               <span id="temp-divider">|</span>
               <span id="main-low">24</span>
             </h3>
-            <p id="updated">Last updated</p>
+            <p id="updated"></p>
           </div>
           <br />
           <div class="card-text">
@@ -80,33 +80,7 @@
               <strong>Hello beautiful soul</strong>
             </p>
             <br />
-            <div class="day-one">
-              <h2 id="day-one">MON</h2>
-              <span class="fa-solid fa-sun" id="day-one-icon"></span>
-              <p>
-                <span id="day-one-high-temp">29 </span>
-                <span id="day-one-line">|</span>
-                <span id="day-one-low-temp">23 </span>
-              </p>
-            </div>
-            <div class="day-two">
-              <h2 id="day-two">TUES</h2>
-              <span class="fa-solid fa-cloud-sun" id="day-two-icon"></span>
-              <p>
-                <span id="day-two-high-temp">29 </span>
-                <span id="day-two-line">|</span>
-                <span id="day-two-low-temp">24 </span>
-              </p>
-            </div>
-            <div class="day-three">
-              <h2 id="day-three">WED</h2>
-              <span class="fa-solid fa-cloud-rain" id="day-three-icon"></span>
-              <p>
-                <span id="day-three-high-temp">29 </span>
-                <span id="day-three-line">|</span>
-                <span id="day-three-low-temp">21</span>
-              </p>
-            </div>
+            <div class="weather-forecast" id="forecast"></div>
             <div>
               <a href="#" id="left-arrow-link">
                 <span class="fa-solid fa-chevron-left" id="left-arrow"></span
@@ -115,6 +89,7 @@
                 ><span class="fa-solid fa-chevron-right" id="right-arrow"></span
               ></a>
             </div>
+            `;
           </div>
         </div>
       </div>
