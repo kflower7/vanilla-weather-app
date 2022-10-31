@@ -90,6 +90,8 @@ function formatUpdate(timestamp) {
 
 let form = document.querySelector(".search-bar");
 form.addEventListener("submit", cityName);
+let rightClick = document.querySelector("#right-arrow-link");
+rightClick.addEventListener("click", displayFutureLocationForecast);
 
 // Current Location and data
 
@@ -202,7 +204,22 @@ function displayCurrentForecast(response) {
     formatForecast(currentTime);
 
     function formatForecast(day) {
-      let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      let days = [
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+      ];
 
       let currentForecastDay = index;
       if (currentForecastDay === 0) {
@@ -232,13 +249,13 @@ function displayCurrentForecast(response) {
         currentForecastHTML =
           currentForecastHTML +
           `<div class="col-4">
-  <h2 class="forecast-day" id="item1">${currentForecastDay}</h2>
-  ${currentForecastIcon}
-  <br />
-  <p class="forecast-temp id="item3">
-   <span id="forecast-temp-high">${currentHighTemp} |</span><span id="forecast-temp-low"> ${currentLowTemp} </span>
-  </p>
-</div>`;
+        <h2 class="forecast-day" id="item1">${currentForecastDay}</h2>
+        ${currentForecastIcon}
+        <br />
+        <p class="forecast-temp id="item3">
+        <span id="forecast-temp-high">${currentHighTemp} |</span><span id="forecast-temp-low"> ${currentLowTemp} </span>
+        </p>
+        </div>`;
       }
     }
   });
@@ -247,81 +264,6 @@ function displayCurrentForecast(response) {
 }
 
 window.onload = currentLocation();
-
-function forecastLocation() {
-  navigator.geolocation.getCurrentPosition(getFutureForecast);
-}
-
-function getFutureForecast(position) {
-  let latitude = position.coords.latitude;
-  let longitude = position.coords.longitude;
-  let apiKey = "a7083641b7ebf003aec9614bf223ec5f";
-  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-  axios.get(forecastApiUrl).then(displayFutureForecast);
-}
-
-function displayFutureForecast(response) {
-  let futureForecast = response.data.list;
-  console.log(futureForecast);
-
-  let futureForecastElement = document.querySelector("#forecast");
-
-  let futureForecastHTML = `<div class="row">`;
-  futureForecast.forEach(function (formatDay, index) {
-    let futureHighTemp = Math.round(formatDay.main.temp_max);
-    let futureLowTemp = Math.round(formatDay.main.temp_min);
-    let futureForecastIcon = formatDay.weather[0].main;
-    formatFutureForecast(currentTime);
-
-    function formatFutureForecast(futureDay) {
-      let futureDays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-
-      let futureForecastDay = index;
-      console.log();
-
-      if (futureForecastDay === 0) {
-        futureForecastDay = futureDays[futureDay.getDay() + 4];
-      }
-      if (futureForecastDay === 1) {
-        futureForecastDay = futureDays[futureDay.getDay() + 5];
-      }
-      if (futureForecastDay === 2) {
-        futureForecastDay = futureDays[futureDay.getDay() + 6];
-      }
-
-      if (futureForecastIcon === "Clear") {
-        futureForecastIcon = `<span class="fa-solid fa-sun" id="item2"></span>`;
-      }
-      if (futureForecastIcon === "Clouds") {
-        futureForecastIcon = `<span class="fa-solid fa-cloud-sun" id="item2"></span>`;
-      }
-      if (futureForecastIcon === "Rain") {
-        futureForecastIcon = `<span class="fa-solid fa-cloud-rain" id="item2"></span>`;
-      }
-      if (futureForecastIcon === "Snow") {
-        futureForecastIcon = `<span class="fa-solid fa-snowflake" id="item2"></span>`;
-      }
-
-      if (index < 3) {
-        futureForecastHTML =
-          futureForecastHTML +
-          `<div class="col-4">
-  <h2 class="forecast-day" id="item1">${futureForecastDay}</h2>
-  ${futureForecastIcon}
-  <br />
-  <p class="forecast-temp id="item3">
-   <span id="forecast-temp-high">${futureHighTemp} |</span><span id="forecast-temp-low"> ${futureLowTemp} </span>
-  </p>
-</div>`;
-      }
-    }
-  });
-
-  futureForecastElement.innerHTML = futureForecastHTML;
-}
-
-let rightClick = document.querySelector("#right-arrow-link");
-rightClick.addEventListener("click", forecastLocation);
 
 // Search Bar
 
@@ -369,75 +311,165 @@ function showMainTemperature(response) {
   backgroundImage.setAttribute("src", `images/${forecastImage}.png`);
   backgroundImage.setAttribute("alt", response.data.weather[0].description);
 
-  getForecast(response.data.coord);
+  getLocationForecast(response.data.coord);
 }
 
-// Forecast
-
-function getForecast(coordinates) {
-  let apiKey = "a33b693cfbefd271b0ed075f9a8f65f0";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
-  axios.get(apiUrl).then(displayForecast);
+function getLocationForecast(position) {
+  console.log(position);
+  let locationLatitude = position.lat;
+  let locationLongitude = position.lon;
+  let apiKey = "a7083641b7ebf003aec9614bf223ec5f";
+  let forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${locationLatitude}&lon=${locationLongitude}&appid=${apiKey}&units=metric`;
+  axios.get(forecastApiUrl).then(displayLocationForecast);
+  axios.get(forecastApiUrl).then(displayFutureLocationForecast);
 }
 
-function displayForecast(response) {
-  let forecast = response.data.list;
+function displayLocationForecast(response) {
+  let locationForecast = response.data.list;
 
-  let forecastElement = document.querySelector("#forecast");
+  let locationForecastElement = document.querySelector("#forecast");
 
-  let forecastHTML = `<div class="row">`;
-  forecast.forEach(function (formatDay, index) {
-    let highTemp = Math.round(formatDay.main.temp_max);
-    let lowTemp = Math.round(formatDay.main.temp_min);
-    let forecastIcon = formatDay.weather[0].main;
-    formatForecast(currentTime);
+  let locationForecastHTML = `<div class="row">`;
+  locationForecast.forEach(function (formatLocationDay, index) {
+    let lighTemp = Math.round(formatLocationDay.main.temp_max);
+    let lowTemp = Math.round(formatLocationDay.main.temp_min);
+    let locationForecastIcon = formatLocationDay.weather[0].main;
+    formatLocationForecast(currentTime);
 
-    function formatForecast(day) {
-      let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    function formatLocationForecast(locationDay) {
+      let lays = [
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+      ];
 
-      let forecastDay = index;
-      if (forecastDay === 0) {
-        forecastDay = days[day.getDay() + 1];
+      let locationForecastDay = index;
+
+      if (index === 0) {
+        locationForecastDay = lays[locationDay.getDay() + 1];
       }
-      if (forecastDay === 1) {
-        forecastDay = days[day.getDay() + 2];
+      if (index === 1) {
+        locationForecastDay = lays[locationDay.getDay() + 2];
       }
-      if (forecastDay === 2) {
-        forecastDay = days[day.getDay() + 3];
+      if (index === 2) {
+        locationForecastDay = lays[locationDay.getDay() + 3];
       }
 
-      if (forecastIcon === "Clear") {
-        forecastIcon = `<span class="fa-solid fa-sun" id="item2"></span>`;
+      if (locationForecastIcon === "Clear") {
+        locationForecastIcon = `<span class="fa-solid fa-sun" id="item2"></span>`;
       }
-      if (forecastIcon === "Clouds") {
-        forecastIcon = `<span class="fa-solid fa-cloud-sun" id="item2"></span>`;
+      if (locationForecastIcon === "Clouds") {
+        locationForecastIcon = `<span class="fa-solid fa-cloud-sun" id="item2"></span>`;
       }
-      if (forecastIcon === "Rain") {
-        forecastIcon = `<span class="fa-solid fa-cloud-rain" id="item2"></span>`;
+      if (locationForecastIcon === "Rain") {
+        locationForecastIcon = `<span class="fa-solid fa-cloud-rain" id="item2"></span>`;
       }
-      if (forecastIcon === "Snow") {
-        forecastIcon = `<span class="fa-solid fa-snowflake" id="item2"></span>`;
+      if (locationForecastIcon === "Snow") {
+        locationForecastIcon = `<span class="fa-solid fa-snowflake" id="item2"></span>`;
       }
 
       if (index < 3) {
-        forecastHTML =
-          forecastHTML +
+        locationForecastHTML =
+          locationForecastHTML +
           `<div class="col-4">
-  <h2 class="forecast-day" id="item1">${forecastDay}</h2>
-  ${forecastIcon}
+  <h2 class="forecast-day" id="item1">${locationForecastDay}</h2>
+  ${locationForecastIcon}
   <br />
   <p class="forecast-temp id="item3">
-   <span id="forecast-temp-high">${highTemp} |</span><span id="forecast-temp-low"> ${lowTemp} </span>
+   <span id="forecast-temp-high">${lighTemp} |</span><span id="forecast-temp-low"> ${lowTemp} </span>
   </p>
 </div>`;
       }
     }
   });
 
-  forecastElement.innerHTML = forecastHTML;
+  locationForecastElement.innerHTML = locationForecastHTML;
 }
 
-// Accurace Forecast Days
+function displayFutureLocationForecast(response) {
+  let futureLocationForecast = response.data.list;
+
+  let futureLocationForecastElement = document.querySelector("#forecast");
+
+  let futureLocationForecastHTML = `<div class="row">`;
+  futureLocationForecast.forEach(function (formatLocationDay, index) {
+    let lighTemp = Math.round(formatLocationDay.main.temp_max);
+    let lowTemp = Math.round(formatLocationDay.main.temp_min);
+    let futureLocationForecastIcon = formatLocationDay.weather[0].main;
+    console.log(formatLocationDay);
+    formatfutureLocationForecast(currentTime);
+
+    function formatfutureLocationForecast(locationDay) {
+      let lays = [
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+        "SUN",
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+      ];
+
+      let futureLocationForecastDay = index;
+
+      if (index === 0) {
+        futureLocationForecastDay = lays[locationDay.getDay() + 0];
+      }
+      if (index === 1) {
+        futureLocationForecastDay = lays[locationDay.getDay() + 1];
+      }
+      if (index === 2) {
+        futureLocationForecastDay = lays[locationDay.getDay() + 2];
+      }
+
+      if (futureLocationForecastIcon === "Clear") {
+        futureLocationForecastIcon = `<span class="fa-solid fa-sun" id="item2"></span>`;
+      }
+      if (futureLocationForecastIcon === "Clouds") {
+        futureLocationForecastIcon = `<span class="fa-solid fa-cloud-sun" id="item2"></span>`;
+      }
+      if (futureLocationForecastIcon === "Rain") {
+        futureLocationForecastIcon = `<span class="fa-solid fa-cloud-rain" id="item2"></span>`;
+      }
+      if (futureLocationForecastIcon === "Snow") {
+        futureLocationForecastIcon = `<span class="fa-solid fa-snowflake" id="item2"></span>`;
+      }
+
+      if (index < 3) {
+        futureLocationForecastHTML =
+          futureLocationForecastHTML +
+          `<div class="col-4">
+  <h2 class="forecast-day" id="item1">${futureLocationForecastDay}</h2>
+  ${futureLocationForecastIcon}
+  <br />
+  <p class="forecast-temp id="item3">
+   <span id="forecast-temp-high">${lighTemp} |</span><span id="forecast-temp-low"> ${lowTemp} </span>
+  </p>
+</div>`;
+      }
+    }
+  });
+
+  futureLocationForecastElement.innerHTML = futureLocationForecastHTML;
+}
 
 // Celsius / Fahrenheit Conversion
 
